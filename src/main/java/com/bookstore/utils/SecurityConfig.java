@@ -17,10 +17,10 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailServices();
-
     }
 
     @Bean
@@ -38,17 +38,17 @@ public class SecurityConfig {
 
     @Bean
     public AccessDeniedHandler customAccessDeniedHandler() {
-        return (request, response, accessDeniedException)
-                -> response.sendRedirect(request.getContextPath() + "/error/403");
+        return (request, response, accessDeniedException) ->
+                response.sendRedirect(request.getContextPath() + "/error/403");
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
-            Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/", "/register",
-                                "/error")
+                        .requestMatchers("/css/**", "/js/**", "/", "/register", "/forgot-password", "/reset-password**", "/oauth2/**")
+                        .permitAll()
+                        .requestMatchers("/error/400", "/error/404", "/error/500", "/error/403")
                         .permitAll()
                         .requestMatchers("/books/edit/{id}", "/books/add", "/books/delete/{id}")
                         .hasAnyAuthority("ADMIN")
@@ -76,8 +76,8 @@ public class SecurityConfig {
                         .tokenValiditySeconds(86400)
                         .userDetailsService(userDetailsService())
                 )
-                .exceptionHandling(exceptionHandling ->
-                        exceptionHandling.accessDeniedHandler(customAccessDeniedHandler()))
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedHandler(customAccessDeniedHandler()))
                 .build();
     }
 }
