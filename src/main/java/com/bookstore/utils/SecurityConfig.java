@@ -76,6 +76,11 @@ public class SecurityConfig {
                         .tokenValiditySeconds(86400)
                         .userDetailsService(userDetailsService())
                 )
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/")
+                        .failureUrl("/login?error")
+                )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(customAccessDeniedHandler()))
                 .build();
