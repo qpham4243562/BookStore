@@ -58,6 +58,7 @@ public class SecurityConfig {
                         .hasAnyAuthority("ADMIN")
                         .requestMatchers("/categories")
                         .hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout.logoutUrl("/logout")

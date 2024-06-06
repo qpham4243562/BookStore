@@ -22,6 +22,9 @@
             <a class="nav-link active" aria-current="page" href="/">Trang chủ</a></li>
           <li class="nav-item"> <a class="nav-link" href="/books">Danh sách sách</a></li>
           <li class="nav-item"> <a class="nav-link" href="/categories">Danh mục sách</a></li>
+          <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+            <a class="nav-link" href="/admin/roles">Quản lý quyền</a>
+          </li>
           <li sec:authorize="isAuthenticated()">
             <form th:action="@{/logout}" method="post">
               <button class="btn btn-outline-primary" type="submit">Đăng xuất</button>

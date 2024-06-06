@@ -1,5 +1,6 @@
 package com.bookstore.services;
 
+import com.bookstore.entity.Role;
 import com.bookstore.entity.User;
 import com.bookstore.repository.IRoleRepository;
 import com.bookstore.repository.IUserRepository;
@@ -10,6 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -76,5 +78,34 @@ public class UserServices {
         user.setResetPasswordToken(null);
         userRepository.save(user);
         return true;
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public boolean userHasRole(Long userId, Long roleId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            return false;
+        }
+        return user.getRoles().stream().anyMatch(role -> role.getId().equals(roleId));
+    }
+
+    public String assignRoleToUser(Long userId, Long roleId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+
+        if (userHasRole(userId, roleId)) {
+            return "User already has this role";
+        }
+
+        user.getRoles().add(role);
+        userRepository.save(user);
+        return "Role assigned successfully";
+    }
+
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
     }
 }
