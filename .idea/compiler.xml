@@ -7,10 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="BookStore" />
+        <module name="bookstore" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="BookStore" target="22" />
       <module name="BookStore (1)" target="22" />
       <module name="bookstore (2)" target="22" />
     </bytecodeTargetLevel>

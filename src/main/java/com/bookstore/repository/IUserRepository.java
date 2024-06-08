@@ -1,5 +1,6 @@
 package com.bookstore.repository;
 
+import com.bookstore.entity.Role;
 import com.bookstore.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -32,4 +33,5 @@ public interface IUserRepository extends JpaRepository<User, Long> { // Chuyển
     User findByEmail(String email);
 
     User findByResetPasswordToken(String token);
+
 }

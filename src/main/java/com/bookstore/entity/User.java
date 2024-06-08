@@ -19,14 +19,14 @@ public class User {
     @Column(name = "username", length = 50, nullable = false, unique = true)
     @NotBlank(message = "Tên đăng nhập không được để trống")
     @Size(max = 50, message = "Tên đăng nhập phải ít hơn 50 ký tự")
-    @ValidUsername
     private String username;
 
     @Column(name = "password", length = 250, nullable = false)
     @NotBlank(message = "Mật khẩu không được để trống")
     private String password;
 
-    @Column(name = "email", length = 50)
+    @Column(name = "email", length = 50, nullable = false, unique = true)
+    @NotBlank(message = "Email không được để trống")
     @Size(max = 50, message = "Email phải ít hơn 50 ký tự")
     private String email;
 
@@ -35,13 +35,8 @@ public class User {
     @NotBlank(message = "Tên của bạn không được để trống")
     private String name;
 
-
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
-    
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Book> books;
-
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

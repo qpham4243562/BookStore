@@ -28,12 +28,16 @@ public class UserServices {
     private PasswordEncoder passwordEncoder;
 
     public void save(User user) {
+        boolean isNewUser = user.getId() == null;
         userRepository.save(user);
-        Long userId = userRepository.getUserIdByUsername(user.getUsername());
-        Long roleId = roleRepository.getRoleIdByName("USER");
 
-        if (roleId != null && userId != null) {
-            userRepository.addRoleToUser(userId, roleId);
+        if (isNewUser) {
+            Long userId = userRepository.getUserIdByUsername(user.getUsername());
+            Long roleId = roleRepository.findByName("USER").getId();
+
+            if (roleId != null && userId != null) {
+                userRepository.addRoleToUser(userId, roleId);
+            }
         }
     }
 
@@ -107,5 +111,14 @@ public class UserServices {
 
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
+    }
+
+    // Trong lớp UserServices
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public Role findRoleByName(String name) {
+        return roleRepository.findByName(name);
     }
 }
