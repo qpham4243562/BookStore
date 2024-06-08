@@ -28,6 +28,6 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        return Collections.singleton(() -> "ROLE_" + role);
+        return Collections.singleton(() ->role);
     }
 }

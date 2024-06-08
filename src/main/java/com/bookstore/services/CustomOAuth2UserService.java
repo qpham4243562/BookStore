@@ -29,7 +29,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         );
 
         // Tạo một danh sách quyền cho người dùng
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+        GrantedAuthority authority = new SimpleGrantedAuthority("USER");
         OAuth2User customOAuth2User = new OAuth2User() {
             @Override
             public Map<String, Object> getAttributes() {

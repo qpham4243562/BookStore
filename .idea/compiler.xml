@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="BookStore" target="22" />
+      <module name="BookStore" target="19" />
       <module name="BookStore (1)" target="22" />
       <module name="bookstore (2)" target="22" />
     </bytecodeTargetLevel>
